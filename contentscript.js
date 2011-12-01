@@ -3,7 +3,7 @@ $('.aside').prepend(
 	"<h2>虾米下载链接 · · · · · ·</h2>"+
 	"<div class='indent'><ul class='bs' id='xiami'>"+
 	"</ul></div>"+
-	"<p class='pl'><a href='/sddd'>报告问题..</a></p>"
+	"<p class='pl'><a href='http://www.douban.com/note/187645551/'>报告问题..</a></p>"
 );
 var words = $('meta[name=keywords]').attr("content").split(',');
 var keyword2 = encodeURIComponent(words[0] + ' ' + words[1]);
