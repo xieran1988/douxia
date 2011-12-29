@@ -1,16 +1,4 @@
 
-$('.aside').prepend(
-	"<h2>虾米下载链接 · · · · · ·</h2>"+
-	"<div class='indent'><ul class='bs' id='xiami'>"+
-	"</ul></div>"+
-	"<p class='pl'>"+
-	"请使用下载工具下载（迅雷、qq旋风..）<br>"+
-	"<a href='http://www.douban.com/note/187645551/'>报告问题..</a></p>"
-);
-var words = $('meta[name=keywords]').attr("content").split(',');
-var keyword2 = encodeURIComponent(words[0] + ' ' + words[1]);
-console.log(keyword2);
-
 function song(no, loc) {
 	var n = parseInt(loc.substr(0, 1));
 	var left = loc.substr(1);
@@ -62,26 +50,52 @@ function album(title, aid) {
 	});
 }
 
-$.ajax({
-	type: 'GET',
-	dataType: 'html',
-	url: 'http://www.xiami.com/search/album?key='+keyword2,
-	success: function (r) {
-		//console.log(r);
-		var i = 0;
-		$(".CDcover100", r).each(function() {
-			var aid = $(this).attr('href').split('/')[2];
-			var title = $(this).attr('title');
-			console.log(aid);
-			console.log(title);
-			$('#xiami').append("<li id='xiami"+aid+"'></li>");
-			album(title, aid);
-			i++;
-		});
-		if (!i) {
-			$('#xiami').append("<li>没有找到相关专辑</li>");
+function search(keyword2) {
+	$('#xiami').empty();
+	$.ajax({
+		type: 'GET',
+		dataType: 'html',
+		url: 'http://www.xiami.com/search/album?key='+keyword2,
+		success: function (r) {
+			//console.log(r);
+			var i = 0;
+			$(".CDcover100", r).each(function() {
+				var aid = $(this).attr('href').split('/')[2];
+				var title = $(this).attr('title');
+				console.log(aid);
+				console.log(title);
+				$('#xiami').append("<li id='xiami"+aid+"'></li>");
+				album(title, aid);
+				i++;
+			});
+			if (!i) {
+				$('#xiami').append("<li>没有找到相关专辑</li>");
+			}
 		}
-	}
-});
+	});
+}
 
+$('.aside').prepend(
+	"<h2>虾米下载链接 · · · · · ·</h2>"+
+	"<div class='indent'><ul class='bs' id='xiami'>"+
+	"</ul></div>"+
+	"<p id='xiamip' class='pl'>"+
+	"请使用下载工具下载（迅雷、qq旋风..）<br>"+
+	"<a href='http://www.douban.com/note/187645551/'>报告问题..　</a>"+
+	"<a id='xiaminotgood'>对结果不满意?</a>"+
+	"<span id='xiamiresearch'><br >"+
+	"<input id='xiamiresearchtxt' type=text /> <input type=button value='搜索专辑' id='xiamiresearchbtn'/></span>"+
+	"</p>"
+);
+$('#xiamiresearch').hide();
+$('#xiaminotgood').click(function () {
+	$('#xiamiresearch').show();
+});
+$('#xiamiresearchbtn').click(function () {
+	search($('#xiamiresearchtxt').val());
+});
+var words = $('meta[name=keywords]').attr("content").split(',');
+var keyword2 = encodeURIComponent(words[0] + ' ' + words[1]);
+console.log(keyword2);
+search(keyword2);
 

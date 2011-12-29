@@ -1,6 +1,6 @@
 {
   "name": "豆瓣音乐虾米下载器",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "打开豆瓣音乐专辑页面，右上角将显示虾米下载链接，报告问题、查看说明请访问http://www.douban.com/note/187645551/",
   "permissions": [
     "http://www.xiami.com/search/*",
